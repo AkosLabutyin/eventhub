@@ -7,6 +7,7 @@ import hu.uni.eventhub.dto.SaveEventDTO;
 import hu.uni.eventhub.entity.Attendee;
 import hu.uni.eventhub.entity.Event;
 import hu.uni.eventhub.entity.Registration;
+import hu.uni.eventhub.exception.ConflictException;
 import hu.uni.eventhub.exception.NotFoundException;
 import hu.uni.eventhub.mapper.AttendeeMapper;
 import hu.uni.eventhub.mapper.EventMapper;
@@ -56,6 +57,10 @@ public class EventService {
     public void deleteEvent(Long id) {
         if (!eventRepository.existsById(id)) {
             throw new NotFoundException("Event not found: " + id);
+        }
+
+        if (registrationRepository.existsByEventId(id)) {
+            throw new ConflictException("Event has registrations, cannot delete");
         }
         eventRepository.deleteById(id);
     }

@@ -34,4 +34,10 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
         return Map.of("error", msg);
     }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleConflict(ConflictException ex) {
+        return Map.of("error", ex.getMessage());
+    }
 }
