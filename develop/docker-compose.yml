@@ -1,0 +1,17 @@
+name: eventhub
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    ports:
+      - "5453:5432"
+    environment:
+      - "TZ=Europe/Budapest"
+      - "POSTGRES_USER=event_manager"
+      - "POSTGRES_PASSWORD=Password123!"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+
+volumes:
+  pgdata:
