@@ -13,3 +13,7 @@ public interface EventMapper {
 
     void updateEntity(SaveEventDTO dto, @MappingTarget Event entity);
 }
+
+
+
+
